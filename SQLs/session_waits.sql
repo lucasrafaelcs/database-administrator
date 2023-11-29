@@ -1,5 +1,5 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://oracle-base.com/dba/10g/session_waits.sql
+-- File Name    : https://oracle-base.com/dba/monitoring/session_waits.sql
 -- Author       : Tim Hall
 -- Description  : Displays information on all database session waits.
 -- Requirements : Access to the V$ views.
@@ -11,13 +11,11 @@ SET PAGESIZE 1000
 
 COLUMN username FORMAT A20
 COLUMN event FORMAT A30
-COLUMN wait_class FORMAT A15
 
 SELECT NVL(s.username, '(oracle)') AS username,
        s.sid,
        s.serial#,
        sw.event,
-       sw.wait_class,
        sw.wait_time,
        sw.seconds_in_wait,
        sw.state
