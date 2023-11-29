@@ -1,20 +1,21 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://oracle-base.com/dba/10g/jobs_running.sql
+-- File Name    : https://oracle-base.com/dba/monitoring/jobs_running.sql
 -- Author       : Tim Hall
--- Description  : Displays scheduler information for running jobs.
+-- Description  : Displays information about all jobs currently running.
 -- Requirements : Access to the DBA views.
 -- Call Syntax  : @jobs_running
--- Last Modified: 27/07/2005
+-- Last Modified: 15/07/2000
 -- -----------------------------------------------------------------------------------
-SET LINESIZE 200
+SET LINESIZE 500
+SET PAGESIZE 1000
+SET VERIFY OFF
 
-COLUMN owner FORMAT A20
-COLUMN elapsed_time FORMAT A30
+SELECT a.job "Job",
+       a.sid,
+       a.failures "Failures",       
+       Substr(To_Char(a.last_date,'DD-Mon-YYYY HH24:MI:SS'),1,20) "Last Date",      
+       Substr(To_Char(a.this_date,'DD-Mon-YYYY HH24:MI:SS'),1,20) "This Date"             
+FROM   dba_jobs_running a;
 
-SELECT owner,
-       job_name,
-       running_instance,
-       elapsed_time,
-       session_id
-FROM   dba_scheduler_running_jobs
-ORDER BY owner, job_name;
+SET PAGESIZE 14
+SET VERIFY ON
